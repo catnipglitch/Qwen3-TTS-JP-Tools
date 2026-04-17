@@ -4,13 +4,14 @@
 
 ⚠️ This is a Japanese-focused fork of QwenLM/Qwen3-TTS.
 This repository is NOT an official Qwen repository.
+⚠️ このリポジトリは QwenLM/Qwen3-TTS のフォークです。このリポジトリは Qwen の公式リポジトリではありません。
 
-Thanks to the Qwen3-TTS developers and contributors.
+Thanks to the Qwen3-TTS developers and contributors. / Qwen3-TTS 開発者とコントリビューターの皆様に感謝します。
 
-Japanese translation: [README_JA.md](README_JA.md)
-日本語のREADMEはこちら: [README_JA.md](README_JA.md)
+English README: [README.md](README.md)
 
----
+Supplementary docs: [README_ja_changes.md](README_ja_changes.md), [README_additional.md](README_additional.md)
+
 
 <p align="center">
     <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/qwen3_tts_logo.png" width="400"/>
@@ -23,37 +24,32 @@ Japanese translation: [README_JA.md](README_JA.md)
 
 </p>
 
-We release **Qwen3-TTS**, a series of powerful speech generation capabilities developed by Qwen, offering comprehensive support for voice clone, voice design, ultra-high-quality human-like speech generation, and natural language-based voice control. It provides developers and users with the most extensive set of speech generation features available.
+Qwen が開発した強力な音声生成機能のシリーズ **Qwen3-TTS** を公開します。音声クローン、音声デザイン、超高品質で人間らしい音声生成、自然言語による音声制御を包括的にサポートし、開発者・ユーザーに対して最も幅広い音声生成機能を提供します。
 
 
 ## News
-* 2026.1.22: 🎉🎉🎉 We have released [Qwen3-TTS](https://huggingface.co/collections/Qwen/qwen3-tts) series (0.6B/1.7B) based on Qwen3-TTS-Tokenizer-12Hz. Please check our [blog](https://qwen.ai/blog?id=qwen3tts-0115)!
+* 2026.1.22: 🎉🎉🎉 Qwen3-TTS-Tokenizer-12Hz に基づく [Qwen3-TTS](https://huggingface.co/collections/Qwen/qwen3-tts) シリーズ (0.6B/1.7B) をリリースしました。詳しくは [blog](https://qwen.ai/blog?id=qwen3tts-0115) をご覧ください。
 
 ## Contents <!-- omit in toc -->
 
-- [Qwen3-TTS](#qwen3-tts)
-  - [News](#news)
-  - [Overview](#overview)
-    - [Introduction](#introduction)
-    - [Model Architecture](#model-architecture)
-    - [Released Models Description and Download](#released-models-description-and-download)
-  - [Quickstart](#quickstart)
-    - [Environment Setup](#environment-setup)
-    - [Python Package Usage](#python-package-usage)
-      - [Custom Voice Generate](#custom-voice-generate)
-      - [Voice Design](#voice-design)
-      - [Voice Clone](#voice-clone)
-      - [Voice Design then Clone](#voice-design-then-clone)
-      - [Tokenizer Encode and Decode](#tokenizer-encode-and-decode)
-    - [Launch Local Web UI Demo](#launch-local-web-ui-demo)
-      - [Base Model HTTPS Notes](#base-model-https-notes)
-    - [DashScope API Usage](#dashscope-api-usage)
-  - [vLLM Usage](#vllm-usage)
-    - [Offline Inference](#offline-inference)
-  - [Fine Tuning](#fine-tuning)
-  - [Evaluation](#evaluation)
-  - [Citation](#citation)
-  - [Star History](#star-history)
+- [Overview](#overview) — 概要
+  - [Introduction](#introduction) — イントロダクション
+  - [Model Architecture](#model-architecture) — モデルアーキテクチャ
+  - [Released Models Description and Download](#released-models-description-and-download) — 公開モデルの説明とダウンロード
+- [Quickstart](#quickstart) — クイックスタート
+  - [Environment Setup](#environment-setup) — 環境セットアップ
+  - [Python Package Usage](#python-package-usage) — Python パッケージの使い方
+    - [Custom Voice Generation](#custom-voice-generate) — カスタムボイス生成
+    - [Voice Design](#voice-design) — ボイスデザイン
+    - [Voice Clone](#voice-clone) — ボイスクローン
+    - [Voice Design then Clone](#voice-design-then-clone) — ボイスデザイン後にクローン
+    - [Tokenizer Encode and Decode](#tokenizer-encode-and-decode) — トークナイザのエンコードとデコード
+  - [Launch Local Web UI Demo](#launch-local-web-ui-demo) — ローカル Web UI デモの起動
+  - [DashScope API Usage](#dashscope-api-usage) — DashScope API の利用
+- [vLLM Usage](#vllm-usage) — vLLM の利用
+- [Fine Tuning](#fine-tuning) — ファインチューニング
+- [Evaluation](#evaluation) — 評価
+- [Citation](#citation) — 引用
 
 ## Overview
 ### Introduction
@@ -62,12 +58,12 @@ We release **Qwen3-TTS**, a series of powerful speech generation capabilities de
     <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/qwen3_tts_introduction.png" width="90%"/>
 <p>
 
-Qwen3-TTS covers 10 major languages (Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, and Italian) as well as multiple dialectal voice profiles to meet global application needs. In addition, the models feature strong contextual understanding, enabling adaptive control of tone, speaking rate, and emotional expression based on instructions and text semantics, and they show markedly improved robustness to noisy input text. Key features:
+Qwen3-TTS は 10 の主要言語（中国語、英語、日本語、韓国語、ドイツ語、フランス語、ロシア語、ポルトガル語、スペイン語、イタリア語）と複数の方言音声プロファイルをカバーし、グローバルな利用ニーズに対応します。さらに、文脈理解が強化されており、指示とテキストの意味に基づいて話し方・速度・感情表現を適応的に制御できます。また、ノイズの多い入力テキストに対する堅牢性も大幅に向上しています。主な特徴は次のとおりです。
 
-* **Powerful Speech Representation**: Powered by the self-developed Qwen3-TTS-Tokenizer-12Hz, it achieves efficient acoustic compression and high-dimensional semantic modeling of speech signals. It fully preserves paralinguistic information and acoustic environmental features, enabling high-speed, high-fidelity speech reconstruction through a lightweight non-DiT architecture.
-* **Universal End-to-End Architecture**: Utilizing a discrete multi-codebook LM architecture, it realizes full-information end-to-end speech modeling. This completely bypasses the information bottlenecks and cascading errors inherent in traditional LM+DiT schemes, significantly enhancing the model’s versatility, generation efficiency, and performance ceiling.
-* **Extreme Low-Latency Streaming Generation**: Based on the innovative Dual-Track hybrid streaming generation architecture, a single model supports both streaming and non-streaming generation. It can output the first audio packet immediately after a single character is input, with end-to-end synthesis latency as low as 97ms, meeting the rigorous demands of real-time interactive scenarios.
-* **Intelligent Text Understanding and Voice Control**: Supports speech generation driven by natural language instructions, allowing for flexible control over multi-dimensional acoustic attributes such as timbre, emotion, and prosody. By deeply integrating text semantic understanding, the model adaptively adjusts tone, rhythm, and emotional expression, achieving lifelike “what you imagine is what you hear” output.
+* **強力な音声表現**: 自社開発の Qwen3-TTS-Tokenizer-12Hz により、音声信号の効率的な音響圧縮と高次元の意味モデリングを実現します。パラ言語情報や音響環境の特徴を完全に保持し、軽量な非 DiT アーキテクチャによる高速・高忠実度の音声復元を可能にします。
+* **汎用エンドツーエンドアーキテクチャ**: 離散マルチコードブック LM アーキテクチャを採用し、完全情報のエンドツーエンド音声モデリングを実現します。従来の LM+DiT 方式の情報ボトルネックやカスケード誤差を回避し、汎用性、生成効率、性能の上限を大幅に向上させます。
+* **超低遅延のストリーミング生成**: 革新的な Dual-Track ハイブリッドストリーミング生成アーキテクチャにより、1 つのモデルでストリーミング/非ストリーミングの両方に対応します。1 文字の入力直後に最初の音声パケットを出力でき、エンドツーエンドの合成遅延は最小 97ms と、リアルタイム対話の厳しい要件を満たします。
+* **知的テキスト理解と音声制御**: 自然言語の指示に基づく音声生成をサポートし、音色・感情・韻律など多次元の音響属性を柔軟に制御します。テキスト意味理解を深く統合することで、トーン・リズム・感情表現を適応的に調整し、「想像したとおりの音が出る」出力を実現します。
 
 
 ### Model Architecture
@@ -78,22 +74,22 @@ Qwen3-TTS covers 10 major languages (Chinese, English, Japanese, Korean, German,
 
 ### Released Models Description and Download
 
-Below is an introduction and download information for the Qwen3-TTS models that have already been released. Other models mentioned in the technical report will be released in the near future. Please select and download the model that fits your needs.
+以下は既に公開されている Qwen3-TTS モデルの説明とダウンロード情報です。技術レポートで言及されている他のモデルは、近い将来に公開予定です。用途に合ったモデルを選択してダウンロードしてください。
 
-| Tokenizer Name                      | Description |
+| Tokenizer Name                      | 説明 |
 |---------------------------------|-------------|
-| Qwen3-TTS-Tokenizer-12Hz        | The Qwen3-TTS-Tokenizer-12Hz model which can encode the input speech into codes and decode them back into speech. |
+| Qwen3-TTS-Tokenizer-12Hz        | 入力音声をコードにエンコードし、音声にデコードできる Qwen3-TTS-Tokenizer-12Hz モデル。 |
 
 
-| Model | Features | Language Support | Streaming | Instruction Control |
+| Model | 特徴 | 対応言語 | ストリーミング | 指示制御 |
 |---|---|---|---|---|
-| Qwen3-TTS-12Hz-1.7B-VoiceDesign | Performs voice design based on user-provided descriptions. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
-| Qwen3-TTS-12Hz-1.7B-CustomVoice | Provides style control over target timbres via user instructions; supports 9 premium timbres covering various combinations of gender, age, language, and dialect. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
-| Qwen3-TTS-12Hz-1.7B-Base | Base model capable of 3-second rapid voice clone from user audio input; can be used for fine-tuning (FT) other models. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
-| Qwen3-TTS-12Hz-0.6B-CustomVoice | Supports 9 premium timbres covering various combinations of gender, age, language, and dialect. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
-| Qwen3-TTS-12Hz-0.6B-Base | Base model capable of 3-second rapid voice clone from user audio input; can be used for fine-tuning (FT) other models. | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
+| Qwen3-TTS-12Hz-1.7B-VoiceDesign | ユーザーの説明に基づいて音声デザインを行う。 | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
+| Qwen3-TTS-12Hz-1.7B-CustomVoice | ユーザー指示による音色スタイル制御。性別・年齢・言語・方言の組合せを網羅した 9 種類のプレミアム音色に対応。 | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ | ✅ |
+| Qwen3-TTS-12Hz-1.7B-Base | ユーザーの音声入力から 3 秒で音声クローン可能なベースモデル。ほかのモデルのファインチューニング (FT) に利用可能。 | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
+| Qwen3-TTS-12Hz-0.6B-CustomVoice | 性別・年齢・言語・方言の組合せを網羅した 9 種類のプレミアム音色に対応。 | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
+| Qwen3-TTS-12Hz-0.6B-Base | ユーザーの音声入力から 3 秒で音声クローン可能なベースモデル。ほかのモデルのファインチューニング (FT) に利用可能。 | Chinese, English, Japanese, Korean, German, French, Russian, Portuguese, Spanish, Italian | ✅ |  |
 
-During model loading in the qwen-tts package or vLLM, model weights will be automatically downloaded based on the model name. However, if your runtime environment is not conducive to downloading weights during execution, you can refer to the following commands to manually download the model weights to a local directory:
+qwen-tts パッケージや vLLM でモデルを読み込む際は、モデル名に基づいて自動的に重みがダウンロードされます。実行環境の都合で実行時のダウンロードが難しい場合は、以下のコマンドで重みをローカルに手動ダウンロードできます。
 
 ```bash
 # Download through ModelScope (recommended for users in Mainland China)
@@ -120,20 +116,20 @@ huggingface-cli download Qwen/Qwen3-TTS-12Hz-0.6B-Base --local-dir ./Qwen3-TTS-1
 
 ### Environment Setup
 
-The easiest way to quickly use Qwen3-TTS is to install the `qwen-tts` Python package from PyPI. This will pull in the required runtime dependencies and allow you to load any released Qwen3-TTS model. We recommend using a **fresh, isolated environment** to avoid dependency conflicts with existing packages. You can create a clean Python 3.12 environment like this:
+Qwen3-TTS を素早く使う最も簡単な方法は、PyPI の `qwen-tts` Python パッケージをインストールすることです。必要なランタイム依存が導入され、公開済みの Qwen3-TTS モデルをロードできます。既存のパッケージとの依存衝突を避けるため、**新しい隔離環境** を推奨します。次のようにクリーンな Python 3.12 環境を作成できます。
 
 ```bash
 conda create -n qwen3-tts python=3.12 -y
 conda activate qwen3-tts
 ```
 
-then run:
+次を実行します。
 
 ```bash
 pip install -U qwen-tts
 ```
 
-If you want to develop or modify the code locally, install from source in editable mode.
+ローカルでコードを開発・修正する場合は、ソースから editable でインストールしてください。
 
 ```bash
 git clone https://github.com/QwenLM/Qwen3-TTS.git
@@ -141,28 +137,28 @@ cd Qwen3-TTS
 pip install -e .
 ```
 
-Additionally, we recommend using FlashAttention 2 to reduce GPU memory usage.
+また、GPU メモリ使用量を減らすために FlashAttention 2 を使うことを推奨します。
 
 ```bash
 pip install -U flash-attn --no-build-isolation
 ```
 
-If your machine has less than 96GB of RAM and lots of CPU cores, run:
+RAM が 96GB 未満で CPU コア数が多い環境では、次を実行します。
 
 ```bash
 MAX_JOBS=4 pip install -U flash-attn --no-build-isolation
 ```
 
-Also, you should have hardware that is compatible with FlashAttention 2. Read more about it in the official documentation of the [FlashAttention repository](https://github.com/Dao-AILab/flash-attention). FlashAttention 2 can only be used when a model is loaded in `torch.float16` or `torch.bfloat16`.
+FlashAttention 2 と互換性のあるハードウェアが必要です。詳細は [FlashAttention リポジトリ](https://github.com/Dao-AILab/flash-attention) の公式ドキュメントをご確認ください。FlashAttention 2 は `torch.float16` または `torch.bfloat16` でモデルをロードした場合にのみ利用できます。
 
 
 ### Python Package Usage
 
-After installation, you can import `Qwen3TTSModel` to run custom voice TTS, voice design, and voice clone. The model weights can be specified either as a Hugging Face model id (recommended) or as a local directory path you downloaded. For all the `generate_*` functions below, besides the parameters shown and explicitly documented, you can also pass generation kwargs supported by Hugging Face Transformers `model.generate`, e.g., `max_new_tokens`, `top_p`, etc.
+インストール後、`Qwen3TTSModel` を import してカスタムボイス TTS、ボイスデザイン、ボイスクローンを実行できます。モデル重みは、Hugging Face のモデル ID（推奨）またはダウンロードしたローカルディレクトリを指定できます。以下の `generate_*` 関数では、表示しているパラメータや明示的にドキュメント化されているもの以外にも、Hugging Face Transformers の `model.generate` がサポートする生成 kwargs（例: `max_new_tokens`, `top_p` など）を渡せます。
 
 #### Custom Voice Generate
 
-For custom voice models (`Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice`), you just need to call `generate_custom_voice`, passing a single string or a batch list, along with `language`, `speaker`, and optional `instruct`. You can also call `model.get_supported_speakers()` and `model.get_supported_languages()` to see which speakers and languages the current model supports.
+カスタムボイスモデル（`Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice`）では、`generate_custom_voice` を呼び出し、文字列またはバッチのリスト、`language`、`speaker`、必要に応じて `instruct` を渡します。`model.get_supported_speakers()` と `model.get_supported_languages()` で、現在のモデルが対応しているスピーカーと言語の一覧を取得できます。
 
 ```python
 import torch
@@ -199,9 +195,9 @@ sf.write("output_custom_voice_1.wav", wavs[0], sr)
 sf.write("output_custom_voice_2.wav", wavs[1], sr)
 ```
 
-For `Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice` models, the supported speaker list and speaker descriptions are provided below. We recommend using each speaker’s native language for the best quality. Of course, each speaker can speak any language supported by the model.
+`Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice` モデルに対応するスピーカー一覧と説明は以下のとおりです。最良の品質を得るため、各スピーカーのネイティブ言語の使用を推奨します。もちろん、各スピーカーはモデルが対応する任意の言語を話せます。
 
-| Speaker | Voice Description  |  Native language |
+| Speaker | 音声の説明  |  ネイティブ言語 |
 | --- | --- | --- |
 | Vivian | Bright, slightly edgy young female voice. | Chinese |
 | Serena | Warm, gentle young female voice. | Chinese |
@@ -215,7 +211,7 @@ For `Qwen3-TTS-12Hz-1.7B/0.6B-CustomVoice` models, the supported speaker list an
 
 #### Voice Design
 
-For the voice design model (`Qwen3-TTS-12Hz-1.7B-VoiceDesign`), you can use `generate_voice_design` to provide the target text and a natural-language `instruct` description.
+ボイスデザインモデル（`Qwen3-TTS-12Hz-1.7B-VoiceDesign`）では、`generate_voice_design` を使って対象テキストと自然言語の `instruct` 説明を指定できます。
 
 ```python
 import torch
@@ -255,7 +251,7 @@ sf.write("output_voice_design_2.wav", wavs[1], sr)
 
 #### Voice Clone
 
-For the voice clone model (`Qwen3-TTS-12Hz-1.7B/0.6B-Base`), to clone a voice and synthesize new content, you just need to provide a reference audio clip (`ref_audio`) along with its transcript (`ref_text`). `ref_audio` can be a local file path, a URL, a base64 string, or a `(numpy_array, sample_rate)` tuple. If you set `x_vector_only_mode=True`, only the speaker embedding is used so `ref_text` is not required, but cloning quality may be reduced.
+ボイスクローンモデル（`Qwen3-TTS-12Hz-1.7B/0.6B-Base`）では、音声をクローンして新しい内容を合成するために、参照音声クリップ（`ref_audio`）とその文字起こし（`ref_text`）を指定します。`ref_audio` はローカルファイルパス、URL、base64 文字列、または `(numpy_array, sample_rate)` のタプルを指定できます。`x_vector_only_mode=True` を設定すると話者埋め込みのみを使用し、`ref_text` は不要になりますが、クローン品質が低下する可能性があります。
 
 ```python
 import torch
@@ -281,7 +277,7 @@ wavs, sr = model.generate_voice_clone(
 sf.write("output_voice_clone.wav", wavs[0], sr)
 ```
 
-If you need to reuse the same reference prompt across multiple generations (to avoid recomputing prompt features), build it once with `create_voice_clone_prompt` and pass it via `voice_clone_prompt`.
+同じ参照プロンプトを複数回の生成で使い回したい場合（プロンプト特徴の再計算を避けるため）は、`create_voice_clone_prompt` で一度作成し、`voice_clone_prompt` で渡してください。
 
 ```python
 prompt_items = model.create_voice_clone_prompt(
@@ -298,11 +294,11 @@ sf.write("output_voice_clone_1.wav", wavs[0], sr)
 sf.write("output_voice_clone_2.wav", wavs[1], sr)
 ```
 
-For more examples of reusable voice clone prompts, batch cloning, and batch inference, please refer to the [example codes](https://github.com/QwenLM/Qwen3-TTS/blob/main/examples/test_model_12hz_base.py). With those examples and the `generate_voice_clone` function description, you can explore more advanced usage patterns.
+再利用可能なボイスクローンプロンプト、バッチクローン、バッチ推論の例については、[example codes](https://github.com/QwenLM/Qwen3-TTS/blob/main/examples/test_model_12hz_base.py) を参照してください。これらの例と `generate_voice_clone` の説明を併せて、より高度な使い方を検討できます。
 
 #### Voice Design then Clone
 
-If you want a designed voice that you can reuse like a cloned speaker, a practical workflow is: (1) use the **VoiceDesign** model to synthesize a short reference clip that matches your target persona, (2) feed that clip into `create_voice_clone_prompt` to build a reusable prompt, and then (3) call `generate_voice_clone` with `voice_clone_prompt` to generate new content without re-extracting features every time. This is especially useful when you want a consistent character voice across many lines.
+設計した声をクローン話者のように再利用したい場合は、(1) **VoiceDesign** モデルでターゲットのペルソナに合う短い参照クリップを生成し、(2) そのクリップを `create_voice_clone_prompt` に渡して再利用可能なプロンプトを作成し、(3) `voice_clone_prompt` を指定して `generate_voice_clone` を呼び出す、という流れが実用的です。複数のセリフにわたって同じキャラクターボイスを保ちたい場合に特に有効です。
 
 ```python
 import torch
@@ -371,7 +367,7 @@ for i, w in enumerate(wavs):
 
 #### Tokenizer Encode and Decode
 
-If you only want to encode and decode audio for transport or training and so on, `Qwen3TTSTokenizer` supports encode/decode with paths, URLs, numpy waveforms, and dict/list payloads, for example:
+転送や学習などの目的で音声のエンコード/デコードだけを行いたい場合、`Qwen3TTSTokenizer` はパス、URL、numpy の波形、dict/list 形式のペイロードでの encode/decode をサポートします。例:
 
 ```python
 import soundfile as sf
@@ -387,17 +383,17 @@ wavs, sr = tokenizer.decode(enc)
 sf.write("decode_output.wav", wavs[0], sr)
 ```
 
-For more tokenizer examples (including different input formats and batch usage), please refer to the [example codes](https://github.com/QwenLM/Qwen3-TTS/blob/main/examples/test_tokenizer_12hz.py). With those examples and the description for `Qwen3TTSTokenizer`, you can explore more advanced usage patterns.
+異なる入力形式やバッチ利用を含むトークナイザの例については、[example codes](https://github.com/QwenLM/Qwen3-TTS/blob/main/examples/test_tokenizer_12hz.py) を参照してください。これらの例と `Qwen3TTSTokenizer` の説明を併せて、より高度な使い方を検討できます。
 
 ### Launch Local Web UI Demo
 
-To launch the Qwen3-TTS web ui demo, simply install the `qwen-tts` package and run `qwen-tts-demo`. Use the command below for help:
+Qwen3-TTS の Web UI デモを起動するには、`qwen-tts` パッケージをインストールして `qwen-tts-demo` を実行するだけです。詳細な使い方は以下のコマンドで確認できます。
 
 ```bash
 qwen-tts-demo --help
 ```
 
-To launch the demo, you can use the following commands:
+デモを起動するには、次のコマンドを使用します。
 
 ```bash
 # CustomVoice model
@@ -408,11 +404,11 @@ qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-VoiceDesign --ip 0.0.0.0 --port 8000
 qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-Base --ip 0.0.0.0 --port 8000
 ```
 
-And then open `http://<your-ip>:8000`, or access it via port forwarding in tools like VS Code.
+その後、`http://<your-ip>:8000` を開くか、VS Code などのツールでポートフォワーディングしてアクセスします。
 
 #### Base Model HTTPS Notes
 
-To avoid browser microphone permission issues after deploying the server, for Base model deployments, it is recommended/required to run the gradio service over **HTTPS** (especially when accessed remotely or behind modern browsers/gateways). Use `--ssl-certfile` and `--ssl-keyfile` to enable HTTPS. First we need to generate a private key and a self-signed cert (valid for 365 days):
+サーバーをデプロイした後のブラウザのマイク権限問題を避けるため、Base モデルのデプロイでは **HTTPS** で gradio サービスを実行することが推奨/必須です（特にリモートアクセスや最新ブラウザ/ゲートウェイの背後で利用する場合）。`--ssl-certfile` と `--ssl-keyfile` を使って HTTPS を有効にします。まず秘密鍵と自己署名証明書（有効期限 365 日）を生成します。
 
 ```bash
 openssl req -x509 -newkey rsa:2048 \
@@ -421,7 +417,7 @@ openssl req -x509 -newkey rsa:2048 \
   -subj "/CN=localhost"
 ```
 
-Then run the demo with HTTPS:
+次に HTTPS でデモを起動します。
 
 ```bash
 qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-Base \
@@ -431,25 +427,25 @@ qwen-tts-demo Qwen/Qwen3-TTS-12Hz-1.7B-Base \
   --no-ssl-verify
 ```
 
-And open `https://<your-ip>:8000` to experience it. If your browser shows a warning, it’s expected for self-signed certificates. For production, use a real certificate.
+`https://<your-ip>:8000` を開いて動作を確認します。自己署名証明書なのでブラウザに警告が出ますが正常です。本番では正式な証明書を使用してください。
 
 ### DashScope API Usage
 
-To further explore Qwen3-TTS, we encourage you to try our DashScope API for a faster and more efficient experience. For detailed API information and documentation, please refer to the following:
+Qwen3-TTS をさらに活用するため、より高速かつ効率的な体験として DashScope API を試すことを推奨します。詳細な API 情報やドキュメントは以下をご参照ください。
 
-| API Description | API Documentation (Mainland China) | API Documentation (International) |
+| API 説明 | API ドキュメント（中国本土） | API ドキュメント（海外） |
 |------------------|-----------------------------------|------------------------------------|
-| Real-time API for Qwen3-TTS of custom voice model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-realtime](https://help.aliyun.com/zh/model-studio/qwen-tts-realtime) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime) |
-| Real-time API for Qwen3-TTS of voice clone model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning) |
-| Real-time API for Qwen3-TTS of voice design model. | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design) |
+| カスタムボイスモデル向け Qwen3-TTS のリアルタイム API | [https://help.aliyun.com/zh/model-studio/qwen-tts-realtime](https://help.aliyun.com/zh/model-studio/qwen-tts-realtime) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-realtime) |
+| ボイスクローンモデル向け Qwen3-TTS のリアルタイム API | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-cloning) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-cloning) |
+| ボイスデザインモデル向け Qwen3-TTS のリアルタイム API | [https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-design) | [https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design](https://www.alibabacloud.com/help/en/model-studio/qwen-tts-voice-design) |
 
 
 ## vLLM Usage
 
-vLLM officially provides day-0 support for Qwen3-TTS! Welcome to use vLLM-Omni for Qwen3-TTS deployment and inference. For installation and more details, please check [vLLM-Omni official documentation](https://docs.vllm.ai/projects/vllm-omni/en/latest/getting_started/quickstart/#installation). Now only offline inference is supported. Online serving will be supported later, and vLLM-Omni will continue to offer support and optimization for Qwen3-TTS in areas such as inference speed and streaming capabilities.
+vLLM は Qwen3-TTS を day-0 で公式サポートしています。Qwen3-TTS のデプロイと推論には vLLM-Omni をぜひご利用ください。インストール方法や詳細は [vLLM-Omni 公式ドキュメント](https://docs.vllm.ai/projects/vllm-omni/en/latest/getting_started/quickstart/#installation) を参照してください。現在はオフライン推論のみがサポートされており、オンラインサービングは今後対応予定です。vLLM-Omni は推論速度やストリーミング機能などの領域で Qwen3-TTS のサポートと最適化を継続します。
 
 ### Offline Inference
-You can use vLLM-Omni to inference Qwen3-TTS locally, we provide examples in [vLLM-Omni repo](https://github.com/vllm-project/vllm-omni/tree/main/examples/offline_inference/qwen3_tts) which can generate audio output:
+vLLM-Omni を使ってローカルで Qwen3-TTS を推論できます。音声出力を生成するサンプルは [vLLM-Omni リポジトリ](https://github.com/vllm-project/vllm-omni/tree/main/examples/offline_inference/qwen3_tts) にあります。
 ```bash
 # git clone https://github.com/vllm-project/vllm-omni.git
 
@@ -473,27 +469,27 @@ python end2end.py --query-type Base --mode-tag icl
 
 ## Fine Tuning
 
-Please refer to [Qwen3-TTS-Finetuning](finetuning/) for detailed instructions on fine-tuning Qwen3-TTS.
+Qwen3-TTS のファインチューニングの詳細は [Qwen3-TTS-Finetuning](finetuning/) を参照してください。
 
 ## Evaluation
 
-During evaluation, we ran inference for all models with `dtype=torch.bfloat16` and set `max_new_tokens=2048`. All other sampling parameters used the defaults from the checkpoint’s `generate_config.json`. For the Seed-Test and InstructTTS-Eval test sets, we set `language="auto"`, while for all other test sets we explicitly passed the corresponding `language`. The detailed results are shown below.
+評価時はすべてのモデルを `dtype=torch.bfloat16` で推論し、`max_new_tokens=2048` を設定しました。ほかのサンプリングパラメータはチェックポイントの `generate_config.json` の既定値を使用しています。Seed-Test と InstructTTS-Eval のテストセットでは `language="auto"` を設定し、それ以外のテストセットでは対応する `language` を明示的に指定しました。詳細な結果は以下のとおりです。
 
 
 <details>
-<summary>Speech Generation Benchmarks</summary>
+<summary>音声生成ベンチマーク</summary>
 
-*Zero-shot speech generation on the Seed-TTS test set. Performance is measured by Word Error Rate (WER, ↓), where lower is better.*
+*Seed-TTS テストセットにおけるゼロショット音声生成。性能は Word Error Rate (WER, ↓) で評価し、低いほど良い。*
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: center;">Datasets</th>
-      <th style="text-align: left;">Model</th>
-      <th colspan="2" style="text-align: center;">Performance</th>
+      <th style="text-align: center;">データセット</th>
+      <th style="text-align: left;">モデル</th>
+      <th colspan="2" style="text-align: center;">性能</th>
     </tr>
     <tr style="border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;">
-      <td colspan="4" style="text-align: center;"><em>Content Consistency</em></td>
+      <td colspan="4" style="text-align: center;"><em>内容一致性</em></td>
     </tr>
   </thead>
   <tbody>
@@ -573,12 +569,12 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 <br>
 
-*Multilingual speech generation on the TTS multilingual test set. Performance is measured by Word Error Rate (WER, ↓) for content consistency and Cosine Similarity (SIM, ↑) for speaker similarity.*
+*TTS 多言語テストセットにおける多言語音声生成。性能は内容一致性の WER (↓) と話者類似度の Cosine Similarity (SIM, ↑) で評価。*
 
 <table>
   <thead>
     <tr>
-      <th rowspan="2" style="text-align: left; vertical-align: bottom;">Language</th>
+      <th rowspan="2" style="text-align: left; vertical-align: bottom;">言語</th>
       <th colspan="2" style="text-align: center;">Qwen3-TTS-25Hz</th>
       <th colspan="2" style="text-align: center;">Qwen3-TTS-12Hz</th>
       <th rowspan="2" style="text-align: center; vertical-align: bottom;">MiniMax</th>
@@ -593,7 +589,7 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
   </thead>
   <tbody>
     <tr>
-      <td colspan="7" style="text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;"><em>Content Consistency</em></td>
+      <td colspan="7" style="text-align: center; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;"><em>内容一致性</em></td>
     </tr>
     <tr>
       <td style="text-align: left;">Chinese</td>
@@ -686,7 +682,7 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
       <td style="text-align: center;">3.878</td>
     </tr>
     <tr style="border-top: 1px solid #ddd;">
-      <td colspan="7" style="text-align: center; border-bottom: 1px solid #ddd;"><em>Speaker Similarity</em></td>
+      <td colspan="7" style="text-align: center; border-bottom: 1px solid #ddd;"><em>話者類似度</em></td>
     </tr>
     <tr>
       <td style="text-align: left;">Chinese</td>
@@ -783,12 +779,12 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 <br>
 
-*Cross-lingual speech generation on the Cross-Lingual benchmark. Performance is measured by Mixed Error Rate (WER for English, CER for others, ↓).*
+*Cross-Lingual ベンチマークにおけるクロスリンガル音声生成。性能は Mixed Error Rate（英語は WER、その他は CER、↓）で評価。*
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: left;">Task</th>
+      <th style="text-align: left;">タスク</th>
       <th style="text-align: center;">Qwen3-TTS-25Hz-1.7B-Base</th>
       <th style="text-align: center;">Qwen3-TTS-12Hz-1.7B-Base</th>
       <th style="text-align: center;">CosyVoice3</th>
@@ -885,13 +881,13 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 <br>
 
-*Controllable speech generation on InstructTTSEval. Performance is measured by Attribute Perception and Synthesis accuracy (APS), Description-Speech Consistency (DSD), and Response Precision (RP).*
+*InstructTTSEval における可制御音声生成。性能は Attribute Perception and Synthesis accuracy (APS)、Description-Speech Consistency (DSD)、Response Precision (RP) で評価。*
 
 <table>
   <thead>
     <tr>
-      <th rowspan="2" style="text-align: left; vertical-align: bottom;">Type</th>
-      <th rowspan="2" style="text-align: left; vertical-align: bottom;">Model</th>
+      <th rowspan="2" style="text-align: left; vertical-align: bottom;">タイプ</th>
+      <th rowspan="2" style="text-align: left; vertical-align: bottom;">モデル</th>
       <th colspan="3" style="text-align: center;">InstructTTSEval-ZH</th>
       <th colspan="3" style="text-align: center;">InstructTTSEval-EN</th>
     </tr>
@@ -1038,12 +1034,12 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 <br>
 
-*Target-Speaker Multilingual Speech Generation on the TTS multilingual test set. Performance is measured by Word Error Rate (WER, ↓).*
+*TTS 多言語テストセットにおけるターゲット話者の多言語音声生成。性能は Word Error Rate (WER, ↓) で評価。*
 
 <table>
   <thead>
     <tr>
-      <th rowspan="2" style="text-align: left; vertical-align: bottom;">Language</th>
+      <th rowspan="2" style="text-align: left; vertical-align: bottom;">言語</th>
       <th colspan="2" style="text-align: center;">Qwen3-TTS-25Hz</th>
       <th colspan="2" style="text-align: center;">Qwen3-TTS-12Hz</th>
       <th rowspan="2" style="text-align: center; vertical-align: bottom;">GPT-4o-Audio<br>Preview</th>
@@ -1141,17 +1137,17 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 <br>
 
-*Long speech generation results. Performance is measured by Word Error Rate (WER, ↓).*
+*長文音声生成の結果。性能は Word Error Rate (WER, ↓) で評価。*
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: center;">Datasets</th>
-      <th style="text-align: left;">Model</th>
-      <th colspan="2" style="text-align: center;">Performance</th>
+      <th style="text-align: center;">データセット</th>
+      <th style="text-align: left;">モデル</th>
+      <th colspan="2" style="text-align: center;">性能</th>
     </tr>
     <tr style="border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;">
-      <td colspan="4" style="text-align: center;"><em>Content Consistency</em></td>
+      <td colspan="4" style="text-align: center;"><em>内容一致性</em></td>
     </tr>
   </thead>
   <tbody>
@@ -1187,9 +1183,9 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 
 <details>
-<summary>Speech Tokenizer Benchmarks</summary>
+<summary>音声トークナイザベンチマーク</summary>
 
-*Comparison between different supervised semantic speech tokenizers on ASR Task.*
+*ASR タスクにおける、教師ありセマンティック音声トークナイザの比較。*
 
 <table>
   <thead>
@@ -1254,7 +1250,7 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 <br>
 
-*Comparison between different semantic-related speech tokenizers.*
+*セマンティック関連の音声トークナイザの比較。*
 
 <table>
   <thead>
@@ -1356,7 +1352,7 @@ During evaluation, we ran inference for all models with `dtype=torch.bfloat16` a
 
 ## Citation
 
-If you find our paper and code useful in your research, please consider giving a star :star: and citation :pencil: :)
+本論文とコードが研究に役立つ場合は、ぜひ :star: を付け、引用 :pencil: をお願いします。
 
 ```BibTeX
 @article{Qwen3-TTS,

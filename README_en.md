@@ -2,16 +2,6 @@
 
 <br>
 
-⚠️ This is a Japanese-focused fork of QwenLM/Qwen3-TTS.
-This repository is NOT an official Qwen repository.
-
-Thanks to the Qwen3-TTS developers and contributors.
-
-Japanese translation: [README_JA.md](README_JA.md)
-日本語のREADMEはこちら: [README_JA.md](README_JA.md)
-
----
-
 <p align="center">
     <img src="https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3-TTS-Repo/qwen3_tts_logo.png" width="400"/>
 <p>
@@ -31,29 +21,24 @@ We release **Qwen3-TTS**, a series of powerful speech generation capabilities de
 
 ## Contents <!-- omit in toc -->
 
-- [Qwen3-TTS](#qwen3-tts)
-  - [News](#news)
-  - [Overview](#overview)
-    - [Introduction](#introduction)
-    - [Model Architecture](#model-architecture)
-    - [Released Models Description and Download](#released-models-description-and-download)
-  - [Quickstart](#quickstart)
-    - [Environment Setup](#environment-setup)
-    - [Python Package Usage](#python-package-usage)
-      - [Custom Voice Generate](#custom-voice-generate)
-      - [Voice Design](#voice-design)
-      - [Voice Clone](#voice-clone)
-      - [Voice Design then Clone](#voice-design-then-clone)
-      - [Tokenizer Encode and Decode](#tokenizer-encode-and-decode)
-    - [Launch Local Web UI Demo](#launch-local-web-ui-demo)
-      - [Base Model HTTPS Notes](#base-model-https-notes)
-    - [DashScope API Usage](#dashscope-api-usage)
-  - [vLLM Usage](#vllm-usage)
-    - [Offline Inference](#offline-inference)
-  - [Fine Tuning](#fine-tuning)
-  - [Evaluation](#evaluation)
-  - [Citation](#citation)
-  - [Star History](#star-history)
+- [Overview](#overview)
+  - [Introduction](#introduction)
+  - [Model Architecture](#model-architecture)
+  - [Released Models Description and Download](#released-models-description-and-download)
+- [Quickstart](#quickstart)
+  - [Environment Setup](#environment-setup)
+  - [Python Package Usage](#python-package-usage)
+    - [Custom Voice Generation](#custom-voice-generate)
+    - [Voice Design](#voice-design)
+    - [Voice Clone](#voice-clone)
+    - [Voice Design then Clone](#voice-design-then-clone)
+    - [Tokenizer Encode and Decode](#tokenizer-encode-and-decode)
+  - [Launch Local Web UI Demo](#launch-local-web-ui-demo)
+  - [DashScope API Usage](#dashscope-api-usage)
+- [vLLM Usage](#vllm-usage)
+- [Fine Tuning](#fine-tuning)
+- [Evaluation](#evaluation)
+- [Citation](#citation)
 
 ## Overview
 ### Introduction
